@@ -1,0 +1,50 @@
+<section class="card" style="max-width:720px;margin:0 auto;">
+  <form method="GET" action="/ui/restaurants" class="grid">
+    <div>
+      <label class="muted">Page</label>
+      <input class="input" type="number" name="page" min="1" value="{{query.page}}">
+    </div>
+
+    <div>
+      <label class="muted">Per Page</label>
+      <input class="input" type="number" name="perPage" min="1" value="{{query.perPage}}">
+    </div>
+
+    <div>
+      <label class="muted">Borough</label>
+      <select class="input" name="borough">
+        <option value="" {{#unless query.borough}}selected{{/unless}}>Any</option>
+        {{!-- simple inline selection check --}}
+        <option value="Manhattan" {{#if (eq query.borough "Manhattan")}}selected{{/if}}>Manhattan</option>
+        <option value="Bronx" {{#if (eq query.borough "Bronx")}}selected{{/if}}>Bronx</option>
+        <option value="Brooklyn" {{#if (eq query.borough "Brooklyn")}}selected{{/if}}>Brooklyn</option>
+        <option value="Queens" {{#if (eq query.borough "Queens")}}selected{{/if}}>Queens</option>
+        <option value="Staten Island" {{#if (eq query.borough "Staten Island")}}selected{{/if}}>Staten Island</option>
+      </select>
+    </div>
+
+    <button class="btn" type="submit">Search</button>
+  </form>
+</section>
+
+{{#if error}}
+  <div class="notice" style="max-width:720px;margin:14px auto;">Error: {{error}}</div>
+{{/if}}
+
+<section class="card" style="max-width:720px;margin:14px auto;">
+  {{#if restaurants.length}}
+    <div class="list">
+      {{#each restaurants}}
+        <div class="row">
+          <div><strong>{{name}}</strong><br><span class="muted">{{cuisine}}</span></div>
+          <div>{{borough}}</div>
+          <div>{{address.building}} {{address.street}} {{address.zipcode}}</div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="notice">No restaurants yet — submit the form to search.</div>
+  {{/if}}
+</section>
+
+
